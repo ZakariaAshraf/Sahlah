@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahlah/constants/app_colors.dart';
 import '../../data/models/price_entry_model.dart';
-import '../add_price/presentation/pages/add_price_screen.dart';
+import '../price_operations/presentation/pages/add_price_screen.dart';
 
 class PriceItem extends StatelessWidget {
   final PriceEntry entry;
-  final String? categoryId;
-  final String? subcategoryId;
-  final String? productId;
+  final String categoryId;
+  final String subcategoryId;
+  final String productId;
 
   const PriceItem({
     super.key,
     required this.entry,
-    this.categoryId,
-    this.productId,
-    this.subcategoryId,
+    required this.categoryId,
+    required this.productId,
+    required this.subcategoryId,
   });
 
   @override
@@ -57,7 +57,7 @@ class PriceItem extends StatelessWidget {
                   style: GoogleFonts.inter(
                     color: AppColors.blackSecondary,
                     fontSize: 11.0,
-                    fontWeight: FontWeight.normal
+                    fontWeight: FontWeight.normal,
                   ),
                   children: [
                     TextSpan(
@@ -82,7 +82,18 @@ class PriceItem extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => AddPriceScreen(),));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddPriceScreen(
+                            categoryId: categoryId,
+                            subcategoryId: subcategoryId,
+                            productId: productId,
+                            oldPrice:entry.price.toString(),
+                            superMarketName: entry.supermarket,
+                          ),
+                        ),
+                      );
                     },
                     child: Text(
                       "Update price",

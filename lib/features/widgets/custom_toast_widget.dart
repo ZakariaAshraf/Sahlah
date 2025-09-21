@@ -52,7 +52,7 @@ class CustomToastWidget {
         ],
       ),
       alignment: Alignment.bottomCenter,
-      autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 4),
+      autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 1),
       backgroundColor: backgroundColor ?? (isDark ? const Color(0xFF2A2A2A) : const Color(0xFFFFEFE8)),
       margin: EdgeInsets.only(
         top: 650,

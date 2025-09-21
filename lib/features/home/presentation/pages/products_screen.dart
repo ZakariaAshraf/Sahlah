@@ -20,7 +20,13 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Products",style: GoogleFonts.aBeeZee(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),),
+      ),
       body: StreamBuilder(
         stream: _service.getProducts(categoryId, subCategoryId),
         builder: (context, snapshot) {

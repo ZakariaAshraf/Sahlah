@@ -21,7 +21,13 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(category.name,style: GoogleFonts.aBeeZee(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),),
+      ),
       body: StreamBuilder(
         stream: _service.getSubcategories(category.id),
         builder: (context, snapshot) {

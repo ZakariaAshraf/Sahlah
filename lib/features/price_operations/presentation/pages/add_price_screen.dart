@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:sahlah/features/widgets/custom_toast_widget.dart';
 import 'package:sahlah/features/widgets/primary_button.dart';
 
 import '../../../../constants/app_colors.dart';
+import '../../../../data/models/price_entry_model.dart';
+import '../../cubits/price_update_cubit.dart';
 
 class AddPriceScreen extends StatefulWidget {
   final String categoryId;
   final String subcategoryId;
   final String productId;
+  final String? superMarketName;
+  final String? oldPrice;
 
   const AddPriceScreen({
     super.key,
     required this.categoryId,
     required this.subcategoryId,
-    required this.productId,
+    required this.productId,  this.superMarketName, this.oldPrice,
   });
 
   @override
@@ -29,17 +35,28 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
 
   TextEditingController priorityController = TextEditingController();
 
-  String? priority;
+  String? supermarket;
 
-  List<String> selectedPriority = ["Seodi", "Carfour", "Hyperone"];
+  List<String> selectedSupermarket = ["Seoudi", "Carrefour", "HyperOne"];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    priceController.text=widget.oldPrice ?? "";
+    return BlocListener<PriceUpdateCubit, PriceUpdateState>(
+      listener: (context, state) {
+        if (state is PriceUpdateSuccess) {
+          CustomToastWidget.show(context: context, title: "Update success", iconPath: "assets/images/start.jpg");
+          Navigator.pop(context);
+        } else if (state is PriceUpdateFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
+      },
+  child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "Add new Price",
+        title: Text("Update Price",
           style: GoogleFonts.inter(
             color: AppColors.blackSecondary,
             fontWeight: FontWeight.bold,
@@ -51,13 +68,16 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
           Container(
             height: 400,
             margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(border: Border.all(color: Colors.black),borderRadius: BorderRadius.circular(20)),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   DropdownButtonFormField<String>(
-                    value: priority,
+                    value: widget.superMarketName ?? supermarket,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -68,14 +88,20 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                         color: AppColors.primary,
                       ),
                     ),
-                    items: selectedPriority.map((task) {
-                      return DropdownMenuItem(value: task, child: Text(task,style: GoogleFonts.aBeeZee(
-                        color: AppColors.blackSecondary,
-                        fontWeight: FontWeight.w600,
-                      ),));
+                    items: selectedSupermarket.map((task) {
+                      return DropdownMenuItem(
+                        value: task,
+                        child: Text(
+                          task,
+                          style: GoogleFonts.aBeeZee(
+                            color: AppColors.blackSecondary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      );
                     }).toList(),
                     onChanged: (value) {
-                      priority = value as String;
+                      supermarket = value as String;
                     },
                     validator: (value) {
                       if (value == null) {
@@ -113,7 +139,10 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.camera_alt, color: AppColors.primary),
+                                const Icon(
+                                  Icons.camera_alt,
+                                  color: AppColors.primary,
+                                ),
                                 Text(
                                   "Upload receipt",
                                   style: GoogleFonts.inter(
@@ -129,12 +158,51 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
               ),
             ),
           ),
-          PrimaryButton(title: "Save",color: AppColors.primary,)
+          BlocBuilder<PriceUpdateCubit, PriceUpdateState>(
+            builder: (context, state) {
+              return PrimaryButton(
+                title: "Save",
+                color: AppColors.primary,
+                onTap: () => _addNewPriceWithOutReceipt(context),
+              );
+            },
+          ),
         ],
       ),
+    ),
+);
+  }
+  void _addNewPriceWithOutReceipt(BuildContext context) {
+    if (supermarket == null || supermarket!.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select a supermarket')),
+      );
+      return;
+    }
+
+    if (priceController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a price')),
+      );
+      return;
+    }
+
+    final priceEntry = PriceEntry(
+      supermarket: supermarket!,
+      price: double.parse(priceController.text),
+      updatedAt: DateTime.now().toString(),
+      id: "will be random",
+      updatedBy: "zakaria"
+    );
+
+    context.read<PriceUpdateCubit>().updatePrice(
+      widget.categoryId,
+      widget.subcategoryId,
+      widget.productId,
+      priceEntry,
+      supermarket!
     );
   }
-
   Future<void> selectImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);

@@ -4,7 +4,7 @@ import 'package:sahlah/constants/app_colors.dart';
 import 'package:sahlah/data/models/price_entry_model.dart';
 import 'package:sahlah/features/widgets/price_item.dart';
 import '../../data/services/firestore_service.dart';
-import '../add_price/presentation/pages/add_price_screen.dart';
+import '../price_operations/presentation/pages/add_price_screen.dart';
 
 class PricesListWidget extends StatelessWidget {
   final String categoryId;
@@ -46,7 +46,7 @@ class PricesListWidget extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) =>
-                    PriceItem(entry: prices[index]),
+                    PriceItem(entry: prices[index],productId: productId,subcategoryId: subcategoryId,categoryId: categoryId,),
                 itemCount: prices.length,
               ),
               GestureDetector(

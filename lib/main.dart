@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sahlah/features/on_boarding/welcome_screen.dart';
 
-import 'features/add_price/cubits/price_update_cubit.dart';
+import 'features/price_operations/cubits/price_update_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

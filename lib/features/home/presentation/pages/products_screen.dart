@@ -4,6 +4,7 @@ import 'package:sahlah/data/models/product_model.dart';
 
 import '../../../../constants/app_colors.dart';
 import '../../../../data/services/firestore_service.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../widgets/prices_list_widget.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -19,10 +20,12 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Products",style: GoogleFonts.aBeeZee(
+        title: Text(l10n!.products,style: GoogleFonts.aBeeZee(
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),),

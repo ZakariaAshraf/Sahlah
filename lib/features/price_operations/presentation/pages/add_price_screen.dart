@@ -9,6 +9,7 @@ import 'package:sahlah/features/widgets/primary_button.dart';
 
 import '../../../../constants/app_colors.dart';
 import '../../../../data/models/price_entry_model.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../cubits/price_update_cubit.dart';
 
 class AddPriceScreen extends StatefulWidget {
@@ -41,6 +42,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     priceController.text=widget.oldPrice ?? "";
     return BlocListener<PriceUpdateCubit, PriceUpdateState>(
       listener: (context, state) {
@@ -56,12 +58,12 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
   child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Update Price",
-          style: GoogleFonts.inter(
-            color: AppColors.blackSecondary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        // title: Text("Update Price",
+        //   style: GoogleFonts.inter(
+        //     color: AppColors.blackSecondary,
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        // ),
       ),
       body: Column(
         children: [
@@ -82,7 +84,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      labelText: 'Super Market',
+                      labelText: AppLocalizations.of(context)!.supermarket,
                       prefixIcon: const Icon(
                         Icons.shopping_cart_outlined,
                         color: AppColors.primary,
@@ -105,7 +107,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                     },
                     validator: (value) {
                       if (value == null) {
-                        return 'Please select supermarket';
+                        return l10n!.selectSupermarket;
                       }
                       return null;
                     },
@@ -117,7 +119,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      hintText: 'Enter price here',
+                      hintText: l10n!.enterPrice,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -144,7 +146,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                                   color: AppColors.primary,
                                 ),
                                 Text(
-                                  "Upload receipt",
+                                  l10n.uploadReceipt,
                                   style: GoogleFonts.inter(
                                     color: AppColors.blackSecondary,
                                     fontWeight: FontWeight.bold,
@@ -161,7 +163,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
           BlocBuilder<PriceUpdateCubit, PriceUpdateState>(
             builder: (context, state) {
               return PrimaryButton(
-                title: "Save",
+                title: l10n.save,
                 color: AppColors.primary,
                 onTap: () => _addNewPriceWithOutReceipt(context),
               );
@@ -175,14 +177,14 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
   void _addNewPriceWithOutReceipt(BuildContext context) {
     if (supermarket == null || supermarket!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a supermarket')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.selectSupermarket)),
       );
       return;
     }
 
     if (priceController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a price')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.enterPriceValidation)),
       );
       return;
     }

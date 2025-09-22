@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahlah/constants/app_colors.dart';
 import '../../data/models/price_entry_model.dart';
+import '../../l10n/app_localizations.dart';
 import '../price_operations/presentation/pages/add_price_screen.dart';
 
 class PriceItem extends StatelessWidget {
@@ -20,6 +21,8 @@ class PriceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       color: Color(0xffE8E9EB),
       child: Column(
@@ -38,7 +41,7 @@ class PriceItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${entry.price}",
+                  "${l10n?.price(entry.price)}",
                   style: GoogleFonts.aBeeZee(
                     color: Colors.black,
                     fontSize: 15.0,
@@ -96,7 +99,7 @@ class PriceItem extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      "Update price",
+                      l10n!.updatePrice,
                       style: GoogleFonts.inter(
                         color: AppColors.blackSecondary,
                         fontWeight: FontWeight.w500,

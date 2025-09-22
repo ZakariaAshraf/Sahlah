@@ -4,8 +4,9 @@ class CategoryModel {
   final String id;
   final String name;
   final String icon;
+  final String? imagePath;
 
-  CategoryModel({required this.id, required this.name, required this.icon});
+  CategoryModel( {required this.id, required this.name, required this.icon,this.imagePath,});
 
   factory CategoryModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
@@ -13,6 +14,7 @@ class CategoryModel {
       id: doc.id,
       name: data['name'] ?? '',
       icon: data['icon'] ?? '',
+      // imagePath: data['imagePath'] ?? '',
     );
   }
 

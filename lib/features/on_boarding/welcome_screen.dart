@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahlah/constants/app_colors.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../home/presentation/pages/home_screen.dart';
 import '../widgets/primary_button.dart';
 
@@ -10,6 +11,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           SizedBox(height: 40),
           Text(
-            "Groceries now is Sahlah",
+            l10n!.appTitle,
             style: GoogleFonts.quicksand(
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -33,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
           Text(
-            'Find the best grocery prices near you',
+            l10n.welcomeMessage,
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(color: Colors.black, fontSize: 14.0),
           ),
@@ -45,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) =>  HomeScreen()),
               );
             },
-            title: "Lets Shop",
+            title: l10n.letsShop,
             color: AppColors.primary,
           ),
         ],

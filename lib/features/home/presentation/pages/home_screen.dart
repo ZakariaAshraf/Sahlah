@@ -1,38 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sahlah/data/services/firestore_service.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/features/home/presentation/pages/category_screen.dart';
 import 'package:sahlah/features/home/presentation/widgets/cheapets_today_widget.dart';
 import 'package:sahlah/features/settings/presentation/views/settings_view.dart';
-
 import '../../../../constants/app_colors.dart';
-import '../../../../data/models/category_model.dart';
 import '../../../../data/services/category_service.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  // final List iconsData = [
-  //   "assets/icons/bakery.png",
-  //   "assets/icons/drinks.png",
-  //   "assets/icons/dairy.png",
-  //   "assets/icons/fruits.png",
-  //   "assets/icons/grains.png",
-  //   "assets/icons/oil.png",
-  //   "assets/icons/meat.png",
-  //   "assets/icons/veg.png",
-  // ];
   String location = 'Cairo';
   final List<String> selectedLocation = ["Cairo"];
-
-  // final FirestoreService _service = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final categories = CategoryService.getCategories(context);
+    final theme =Theme.of(context).textTheme;
 
     return Scaffold(
       // appBar: AppBar(),
@@ -45,12 +31,12 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: 290,
+                    width: 310.w,
                     child: CupertinoSearchTextField(
                       onChanged: (value) {
-                        // context.read<SearchCubit>().search(value);
                       },
-                      placeholder: l10n?.search ?? "Search",
+                      placeholder: l10n!.search,
+                      style: theme.titleSmall ,
                     ),
                   ),
                   IconButton(
@@ -64,10 +50,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-
               ///-icons grid view
             SizedBox(
-              height: 250,
+              height: 320.h,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -90,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                           categories[index].icon,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 40,
+                            fontSize: 45.sp,
                           ),
                         ),
                       ),
@@ -98,10 +83,7 @@ class HomeScreen extends StatelessWidget {
                         flex: 1,
                         child: Text(
                           categories[index].name,
-                          style: GoogleFonts.quicksand(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: theme.titleSmall,
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -116,115 +98,35 @@ class HomeScreen extends StatelessWidget {
                   childAspectRatio: 0.8,
                   mainAxisSpacing: 10,
                 ),
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(10.w),
               ),
             ),
-              // StreamBuilder<List<CategoryModel>>(
-              //   stream: _service.getCategories(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.hasError) {
-              //       return Text("Error: ${snapshot.error}");
-              //     }
-              //
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return SizedBox(
-              //         height: 250,
-              //         child: Center(child: CircularProgressIndicator()),
-              //       );
-              //     }
-              //
-              //     if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              //       return Text("No data available");
-              //     }
-              //
-              //     // List<CategoryModel> categories = snapshot.data!;
-              //     return SizedBox(
-              //       height: 250,
-              //       child: GridView.builder(
-              //         physics: const NeverScrollableScrollPhysics(),
-              //         shrinkWrap: true,
-              //         itemCount: categories.length,
-              //         itemBuilder: (context, index) => InkWell(
-              //           onTap: () => Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) => CategoryScreen(
-              //                 category: categories[index],
-              //                 subCategoryIcon: iconsData[index],
-              //               ),
-              //             ),
-              //           ),
-              //           child: Column(
-              //             children: [
-              //               Expanded(
-              //                 flex: 2,
-              //                 child: Text(
-              //                   categories[index].icon,
-              //                   style: TextStyle(
-              //                     fontWeight: FontWeight.bold,
-              //                     fontSize: 40,
-              //                   ),
-              //                 ),
-              //               ),
-              //               Expanded(
-              //                 flex: 1,
-              //                 child: Text(
-              //                   categories[index].name,
-              //                   style: GoogleFonts.quicksand(
-              //                     fontSize: 12,
-              //                     fontWeight: FontWeight.bold,
-              //                   ),
-              //                   textAlign: TextAlign.center,
-              //                   maxLines: 2,
-              //                   overflow: TextOverflow.ellipsis,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //           crossAxisCount: 4,
-              //           crossAxisSpacing: 10,
-              //           childAspectRatio: 0.8,
-              //           mainAxisSpacing: 10,
-              //         ),
-              //         padding: EdgeInsets.all(10),
-              //       ),
-              //     );
-              //   },
-              // ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(10.w),
                 child: Text(
                   AppLocalizations.of(context)!.cheapestToday,
-                  style: GoogleFonts.quicksand(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: theme.displayLarge!.copyWith(fontSize: 30.sp),
                 ),
               ),
-
               /// -cheapest today container
               CheapestTodayWidget(),
+              SizedBox(height: 10.h,),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(10.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.location,
-                      style: GoogleFonts.quicksand(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: theme.displayLarge!.copyWith(fontSize: 30.sp),
                     ),
                     SizedBox(
-                      width: 170,
+                      width: 170.w,
                       child: DropdownButtonFormField<String>(
                         value: location,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
                           labelText: AppLocalizations.of(context)!.location,
                           prefixIcon: const Icon(
@@ -237,8 +139,7 @@ class HomeScreen extends StatelessWidget {
                             value: task,
                             child: Text(
                               task,
-                              style: GoogleFonts.aBeeZee(
-                                color: AppColors.blackSecondary,
+                              style: TextStyle(
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

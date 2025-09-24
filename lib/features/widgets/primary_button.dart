@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;
@@ -9,22 +9,20 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme =Theme.of(context).textTheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
-        width: 327,
+        height: 60.h,
+        width: 327.w,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           color: color,
         ),
         child:Center(
           child: Text(
             title,
-            style:  GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-            ),
+            style:theme.bodyMedium,
           ),
         ),
       ),

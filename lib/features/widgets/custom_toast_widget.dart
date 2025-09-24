@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomToastWidget {
   static void show({
@@ -19,8 +20,8 @@ class CustomToastWidget {
       title: Row(
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: 24.w,
+            height: 24.h,
             decoration: BoxDecoration(
               color: iconBackgroundColor ?? const Color(0xFF8D1B3D),
               shape: BoxShape.circle,
@@ -29,22 +30,22 @@ class CustomToastWidget {
               child: iconPath.toLowerCase().endsWith('.svg')
                   ? Image.asset(
                       iconPath,
-                      width: 16,
-                      height: 16,
+                      width: 16.w,
+                      height: 16.h,
                     )
                   : Image.asset(
                       iconPath,
-                      width: 16,
-                      height: 16,
+                      width: 16.w,
+                      height: 16.h,
                     ),
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Expanded(
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 12.sp,
                 color: isDark ? Colors.white : Colors.black87,
               ),
             ),
@@ -55,16 +56,16 @@ class CustomToastWidget {
       autoCloseDuration: autoCloseDuration ?? const Duration(seconds: 1),
       backgroundColor: backgroundColor ?? (isDark ? const Color(0xFF2A2A2A) : const Color(0xFFFFEFE8)),
       margin: EdgeInsets.only(
-        top: 650,
-        left: 60,
-        right: 60,
+        top: 650.h,
+        left: 60.w,
+        right: 60.w,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      borderRadius: BorderRadiusGeometry.all(Radius.circular(25)),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+      borderRadius: BorderRadiusGeometry.all(Radius.circular(25.r)),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1),
-          blurRadius: 10,
+          blurRadius: 10.r,
           offset: const Offset(0, 2),
         ),
       ],

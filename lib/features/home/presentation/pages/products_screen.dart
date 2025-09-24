@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/data/models/product_model.dart';
 
 import '../../../../constants/app_colors.dart';
@@ -21,14 +21,12 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme =Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(l10n!.products,style: GoogleFonts.aBeeZee(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(l10n!.products,style:theme.titleLarge,),
       ),
       body: StreamBuilder(
         stream: _service.getProducts(categoryId, subCategoryId),
@@ -39,7 +37,7 @@ class ProductsScreen extends StatelessWidget {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox(
-              height: 250,
+              height: 250.h,
               child: Center(child: CircularProgressIndicator()),
             );
           }
@@ -54,16 +52,12 @@ class ProductsScreen extends StatelessWidget {
               child: Card(
                 color: AppColors.primary,
                 child: ExpansionTile(
-                  leading: Text(products[index].brand,style: GoogleFonts.aBeeZee(
+                  leading: Text(products[index].brand,style: TextStyle(
                     color: Colors.black,
-                    fontSize: 13.0,
+                    fontSize: 13.0.sp,
                     fontWeight: FontWeight.bold,
                   ),),
-                  title: Text(products[index].name,style: GoogleFonts.inter(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  title: Text(products[index].name,style: theme.bodyLarge,),
                   subtitle: Text(products[index].size),
                   trailing: Icon(
                     Icons.arrow_drop_down_circle_outlined,
@@ -71,9 +65,9 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.0.w),
                       child: SizedBox(
-                        height: 200,
+                        height: 200.h,
                         child: PricesListWidget(
                           categoryId: categoryId,
                           subcategoryId: subCategoryId,

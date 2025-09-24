@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/constants/app_colors.dart';
 import 'package:sahlah/data/models/price_entry_model.dart';
 import 'package:sahlah/features/widgets/price_item.dart';
@@ -22,6 +22,7 @@ class PricesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme =Theme.of(context).textTheme;
     return StreamBuilder(
       stream: _service.getPrices(categoryId, subcategoryId, productId),
       builder: (context, snapshot) {
@@ -31,7 +32,7 @@ class PricesListWidget extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
-            height: 250,
+            height: 250.h,
             child: Center(child: CircularProgressIndicator()),
           );
         }
@@ -68,20 +69,19 @@ class PricesListWidget extends StatelessWidget {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.w),
                   child: Container(
-                    height: 40,
-                    width: 300,
+                    height: 40.h,
+                    width: 300.w,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       color: AppColors.blackSecondary,
                     ),
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.addPrice,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 16,
+                        style: theme.titleMedium!.copyWith(
+                          color: AppColors.whitePrimary,
                         ),
                       ),
                     ),

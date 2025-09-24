@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/constants/app_colors.dart';
 import '../../data/models/price_entry_model.dart';
 import '../../l10n/app_localizations.dart';
@@ -22,31 +22,24 @@ class PriceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final theme =Theme.of(context).textTheme;
 
     return Card(
-      color: Color(0xffE8E9EB),
+      // color: Colors.transparent,
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   entry.supermarket,
-                  style: GoogleFonts.aBeeZee(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: theme.bodyLarge
                 ),
                 Text(
                   "${l10n?.price(entry.price)}",
-                  style: GoogleFonts.aBeeZee(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: theme.bodyLarge,
                 ),
               ],
             ),
@@ -57,30 +50,21 @@ class PriceItem extends StatelessWidget {
               RichText(
                 text: TextSpan(
                   text: "Last updated ",
-                  style: GoogleFonts.inter(
-                    color: AppColors.blackSecondary,
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.normal,
-                  ),
+                  style: theme.bodySmall!.copyWith(color: Colors.red),
                   children: [
                     TextSpan(
                       text: formatDate(DateTime.parse(entry.updatedAt)),
-                      style: GoogleFonts.inter(
-                        color: Colors.red,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.0,
-                        // fontWeight: FontWeight.bold,
-                      ),
+                      style: theme.titleSmall
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0.w),
                 child: Container(
-                  height: 30,
+                  height: 30.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(50.r),
                     border: Border.all(color: AppColors.blackSecondary),
                   ),
                   child: ElevatedButton(
@@ -100,11 +84,7 @@ class PriceItem extends StatelessWidget {
                     },
                     child: Text(
                       l10n!.updatePrice,
-                      style: GoogleFonts.inter(
-                        color: AppColors.blackSecondary,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10.0,
-                      ),
+                      style: theme.bodySmall,
                     ),
                   ),
                 ),

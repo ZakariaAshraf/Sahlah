@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// Removed google_fonts to reduce APK size
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/constants/app_colors.dart';
 
 import '../../l10n/app_localizations.dart';
@@ -20,16 +21,16 @@ class WelcomeScreen extends StatelessWidget {
           Center(
             child: Image.asset(
               "assets/images/start.jpg",
-              height: 300,
-              width: 300,
+              height: 300.h,
+              width: 300.w,
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 40.h),
           Text(
             l10n!.appTitle,
-            style: GoogleFonts.quicksand(
-              fontSize: 26,
+            style: TextStyle(
+              fontSize: 26.sp,
               fontWeight: FontWeight.bold,
               // color: Colors.white,
             ),
@@ -37,9 +38,9 @@ class WelcomeScreen extends StatelessWidget {
           Text(
             l10n.welcomeMessage,
             textAlign: TextAlign.center,
-            style: GoogleFonts.inter(color: Colors.black, fontSize: 14.0),
+            style: TextStyle(color: Colors.black, fontSize: 14.0.sp),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h),
           PrimaryButton(
             onTap: () {
               Navigator.pushReplacement(

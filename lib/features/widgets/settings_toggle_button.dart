@@ -53,9 +53,7 @@ class SettingsToggleButton extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-            color: AppColors.blackSecondary,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
     );

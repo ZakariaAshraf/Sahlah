@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sahlah/constants/app_colors.dart';
-import 'package:sahlah/data/models/sub_category.dart';
 import 'package:sahlah/data/services/subcategory_service.dart';
 import 'package:sahlah/features/home/presentation/pages/products_screen.dart';
 
 import '../../../../data/models/category_model.dart';
-import '../../../../data/services/firestore_service.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class CategoryScreen extends StatelessWidget {
   final CategoryModel category;
   final String subCategoryIcon;
-  // final FirestoreService _service = FirestoreService();
 
+  // final FirestoreService _service = FirestoreService();
 
   const CategoryScreen({
     super.key,
     required this.category,
-     required this.subCategoryIcon,
+    required this.subCategoryIcon,
   });
 
   @override
   Widget build(BuildContext context) {
-    final subCategories = SubcategoryService.getSubcategories(context,category.id);
+    final subCategories = SubcategoryService.getSubcategories(
+      context,
+      category.id,
+    );
+    final theme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(category.name,style: GoogleFonts.aBeeZee(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(category.name, style: theme.titleLarge),
       ),
-      body:GridView.builder(
+      body: GridView.builder(
         itemBuilder: (context, index) => Card(
           elevation: 2,
           color: AppColors.primary,
@@ -52,28 +50,24 @@ class CategoryScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    width: 70,
-                    height: 50,
-                    padding: const EdgeInsets.all(12),
+                    width: 70.w,
+                    height: 50.h,
+                    padding: EdgeInsets.all(12.w),
                     decoration: const BoxDecoration(
                       color: AppColors.whitePrimary,
                       borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(25),
-                          bottomRight: Radius.circular(25)),
+                        topRight: Radius.circular(25),
+                        bottomRight: Radius.circular(25),
+                      ),
                     ),
-                    child:Image.asset(subCategoryIcon),
+                    child: Image.asset(subCategoryIcon),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(top: 40.h),
                   child: Text(
                     subCategories[index].name,
-                    style: GoogleFonts.inter(
-
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: theme.bodyMedium!.copyWith(fontSize: 22.sp),
                   ),
                 ),
               ],

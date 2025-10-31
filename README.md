@@ -36,27 +36,6 @@ Users can browse categories, check recent prices, and contribute by updating pri
 
 ---
 
-## 🗂 Folder Structure Example
-
-lib/
-┣ models/
-┃ ┣ category_model.dart
-┃ ┣ product_model.dart
-┃ ┗ price_entry.dart
-┣ services/
-┃ ┣ firestore_service.dart
-┃ ┗ category_service.dart
-┣ screens/
-┃ ┣ home_screen.dart
-┃ ┣ subcategory_screen.dart
-┃ ┣ product_list_screen.dart
-┃ ┗ price_update_screen.dart
-┣ widgets/
-┗ main.dart
-
-
----
-
 ## ⚙️ Setup Instructions
 
 1. **Clone the repo**

@@ -82,7 +82,7 @@ Admin panel for verifying price submissions
 ## 🎨 Design
 Primary Color: #F24296
 
-Logo: Minimal vector logo (check /assets/logo/)
+Logo: Minimal vector logo
 
 Icons represent categories visually for both English & Arabic users.
 
